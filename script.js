@@ -10,6 +10,7 @@ let paddleWidth=50;
 let paddleSize=(canvas.width-paddleWidth)/2;
 var rightKeyPressed=false
 let leftKeyPressed=false
+let gameLife=3
 
 window.onload=function(){
     document.addEventListener("keydown", keyIsPressed,false )
@@ -47,8 +48,15 @@ function clearCanvas(){
     if((ballYPosition>canvas.height)||(ballYPosition<0)){
         ballYSpeed=-ballYSpeed
         if(ballYPosition>canvas.height){
-            alert("Game Over")
-        }  
+            gameLife--
+            if(gameLife==0){
+                alert("GAME OVER")
+                document.location.reload();
+            }
+            else{
+                alert("Life left:"+ gameLife)
+            }
+         }  
     } 
     
     if((rightKeyPressed) && ( paddleSize+paddleWidth <canvas.width)){
