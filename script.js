@@ -11,11 +11,12 @@ let paddleSize=(canvas.width-paddleWidth)/2;
 var rightKeyPressed=false
 let leftKeyPressed=false
 let gameLife=3
+var interval=""
 
 window.onload=function(){
     document.addEventListener("keydown", keyIsPressed,false )
     document.addEventListener("keyup", keyIsReleased,false )
-    setInterval(clearCanvas,10)
+    interval = setInterval(clearCanvas,10)
 }
 
 function drawBall() {
@@ -44,20 +45,21 @@ function clearCanvas(){
         ballXSpeed=-ballXSpeed
     }
 
-    ballYPosition=ballYPosition+ballYSpeed;
-    if((ballYPosition>canvas.height)||(ballYPosition<0)){
+    ballYPosition=ballYPosition+ballYSpeed
+    if(ballYPosition < 0){
         ballYSpeed=-ballYSpeed
-        if(ballYPosition>canvas.height){
-            gameLife--
-            if(gameLife==0){
-                alert("GAME OVER")
-                document.location.reload();
-            }
+    }
+    if(ballYPosition - ballRadius > canvas.height){
+        if((ballXPosition > paddleSize) && (ballXPosition < paddleSize + paddleWidth)){
+            ballYSpeed = -ballYSpeed
+        }
             else{
-                alert("Life left:"+ gameLife)
-            }
-         }  
-    } 
+                gameLife--
+                alert("Game Over")   
+                document.location.reload();      
+                clearInterval(interval);      
+            }    
+    }
     
     if((rightKeyPressed) && ( paddleSize+paddleWidth <canvas.width)){
         paddleSize =  paddleSize + 3;
@@ -77,8 +79,6 @@ function keyIsPressed(evt){
         console.log("arrow left working")   
     }
 }
-
-
 
  function keyIsReleased(evt){
      if(evt.key=="ArrowRight"){
