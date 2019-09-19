@@ -5,8 +5,8 @@ let ballXPosition=canvas.width/2;
 let ballYPosition= canvas.height-30;
 let ballXSpeed=2;
 let ballYSpeed=-3;
-let paddleHeight=10;
-let paddleWidth=50;
+let paddleHeight=8;
+let paddleWidth=120;
 let paddleSize=(canvas.width-paddleWidth)/2;
 var rightKeyPressed=false
 let leftKeyPressed=false
@@ -49,16 +49,16 @@ function clearCanvas(){
     if(ballYPosition < 0){
         ballYSpeed=-ballYSpeed
     }
-    if(ballYPosition - ballRadius > canvas.height){
+    if(ballYPosition> canvas.height){
         if((ballXPosition > paddleSize) && (ballXPosition < paddleSize + paddleWidth)){
             ballYSpeed = -ballYSpeed
         }
-            else{
-                gameLife--
-                alert("Game Over")   
-                document.location.reload();      
-                clearInterval(interval);      
-            }    
+        else{
+            gameLife--
+            alert("Game Over")   
+            document.location.reload();      
+            clearInterval(interval);      
+        }    
     }
     
     if((rightKeyPressed) && ( paddleSize+paddleWidth <canvas.width)){
@@ -82,7 +82,7 @@ function keyIsPressed(evt){
 
  function keyIsReleased(evt){
      if(evt.key=="ArrowRight"){
-         rightKeyPressed=false
+        rightKeyPressed=false
      }
      else if(evt.key=="ArrowLeft"){
         leftKeyPressed=false
